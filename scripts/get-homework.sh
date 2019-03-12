@@ -14,11 +14,12 @@ tar zxvf "$ALL" -C homework/
 rm "$ALL"
 
 # Extract every individual homework file.
-cd homework
+cd homework || exit
 for folder in HW-*; do
-    cd "$folder"
-    tar zxvf *.tgz
-    rm -f *.tgz ._*
-    cd ..
+(
+    cd "$folder" || exit
+    tar zxvf ./*.tgz
+    rm -f ./*.tgz ./._*
+)
 done
-cd ..
+cd .. || exit
