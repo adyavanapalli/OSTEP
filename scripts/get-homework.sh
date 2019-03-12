@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# get_hws.sh - downloads and extracts all homework files on the OSTEP website.
+# get-homework.sh - downloads and extracts all homework files on the OSTEP website.
 
 ALL="all.tgz"
 URL="http://www.cs.wisc.edu/~remzi/OSTEP/Homework/$ALL"
