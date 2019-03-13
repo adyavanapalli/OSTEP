@@ -3,18 +3,17 @@
 
 ALL="all.tgz"
 URL="http://www.cs.wisc.edu/~remzi/OSTEP/Homework/$ALL"
-echo "Attempting to download homework files from: $URL"
 
 # Checking existence of wget.
 command -v wget >/dev/null 2>&1 || { echo >&2 "Missing wget. Aborting."; exit 1; }
 
-# Download and extract `all.tgz` homework file.
+# Download and extract the `all.tgz` homework file.
 wget "$URL"
-tar zxvf "$ALL" -C homework/
+tar zxvf "$ALL" -C third-party/homework-files/
 rm "$ALL"
 
 # Extract every individual homework file.
-cd homework || exit
+cd third-party/homework-files || exit
 for folder in HW-*; do
 (
     cd "$folder" || exit
@@ -22,4 +21,3 @@ for folder in HW-*; do
     rm -f ./*.tgz ./._*
 )
 done
-cd .. || exit
