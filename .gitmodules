@@ -1,0 +1,8 @@
+[submodule "third-party/ostep-code"]
+	path = third-party/ostep-code
+	url = https://github.com/adyavanapalli/ostep-code
+	branch = master
+[submodule "third-party/ostep-projects"]
+	path = third-party/ostep-projects
+	url = https://github.com/adyavanapalli/ostep-projects.git
+	branch = master
