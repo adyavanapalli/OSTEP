@@ -103,57 +103,56 @@ simulator prints out the state of the file system at each step, and asks you
 which operation must have taken place to take the file system from one state
 to another. For example:
 
-prompt> vsfs.py -n 6 -s 16
+prompt> ./vsfs.py -n 6 -s 16
 ...
 Initial state
 
 inode bitmap  10000000
-inodes        [d a:0 r:2] [] [] [] [] [] [] [] 
+inodes        [d a:0 r:2] [] [] [] [] [] [] []
 data bitmap   10000000
-data          [(.,0) (..,0)] [] [] [] [] [] [] [] 
+data          [(.,0) (..,0)] [] [] [] [] [] [] []
 
 Which operation took place?
 
 inode bitmap  11000000
-inodes        [d a:0 r:3] [f a:-1 r:1] [] [] [] [] [] [] 
+inodes        [d a:0 r:2] [f a:-1 r:1] [] [] [] [] [] []
 data bitmap   10000000
-data          [(.,0) (..,0) (y,1)] [] [] [] [] [] [] [] 
+data          [(.,0) (..,0) (y,1)] [] [] [] [] [] [] []
 
 Which operation took place?
 
 inode bitmap  11000000
-inodes        [d a:0 r:3] [f a:1 r:1] [] [] [] [] [] [] 
+inodes        [d a:0 r:2] [f a:1 r:1] [] [] [] [] [] []
 data bitmap   11000000
-data          [(.,0) (..,0) (y,1)] [u] [] [] [] [] [] [] 
+data          [(.,0) (..,0) (y,1)] [u] [] [] [] [] [] []
 
 Which operation took place?
 
 inode bitmap  11000000
-inodes        [d a:0 r:4] [f a:1 r:2] [] [] [] [] [] [] 
+inodes        [d a:0 r:2] [f a:1 r:2] [] [] [] [] [] []
 data bitmap   11000000
-data          [(.,0) (..,0) (y,1) (m,1)] [u] [] [] [] [] [] [] 
+data          [(.,0) (..,0) (y,1) (m,1)] [u] [] [] [] [] [] []
 
 Which operation took place?
 
 inode bitmap  11000000
-inodes        [d a:0 r:4] [f a:1 r:1] [] [] [] [] [] [] 
+inodes        [d a:0 r:2] [f a:1 r:1] [] [] [] [] [] []
 data bitmap   11000000
-data          [(.,0) (..,0) (y,1)] [u] [] [] [] [] [] [] 
+data          [(.,0) (..,0) (y,1)] [u] [] [] [] [] [] []
 
 Which operation took place?
 
 inode bitmap  11100000
-inodes        [d a:0 r:5] [f a:1 r:1] [f a:-1 r:1] [] [] [] [] [] 
+inodes        [d a:0 r:2] [f a:1 r:1] [f a:-1 r:1] [] [] [] [] []
 data bitmap   11000000
-data          [(.,0) (..,0) (y,1) (z,2)] [u] [] [] [] [] [] [] 
+data          [(.,0) (..,0) (y,1) (z,2)] [u] [] [] [] [] [] []
 
 Which operation took place?
 
 inode bitmap  11110000
-inodes        [d a:0 r:6] [f a:1 r:1] [f a:-1 r:1] [d a:2 r:2] [] ...
+inodes        [d a:0 r:3] [f a:1 r:1] [f a:-1 r:1] [d a:2 r:2] [] [] [] []
 data bitmap   11100000
-data          [(.,0) (..,0) (y,1) (z,2) (f,3)] [u] [(.,3) (..,0)] [] ...
-]
+data          [(.,0) (..,0) (y,1) (z,2) (f,3)] [u] [(.,3) (..,0)] [] [] [] [] []
 
 When run in this mode, the simulator just shows a series of states, and asks
 what operations caused these transitions to occur. Running with the "-c" flag
@@ -166,52 +165,52 @@ prompt> vsfs.py -n 6 -s 16 -c
 Initial state
 
 inode bitmap  10000000
-inodes        [d a:0 r:2] [] [] [] [] [] [] [] 
+inodes        [d a:0 r:2] [] [] [] [] [] [] []
 data bitmap   10000000
-data          [(.,0) (..,0)] [] [] [] [] [] [] [] 
+data          [(.,0) (..,0)] [] [] [] [] [] [] []
 
 creat("/y");
 
 inode bitmap  11000000
-inodes        [d a:0 r:3] [f a:-1 r:1] [] [] [] [] [] [] 
+inodes        [d a:0 r:2] [f a:-1 r:1] [] [] [] [] [] []
 data bitmap   10000000
-data          [(.,0) (..,0) (y,1)] [] [] [] [] [] [] [] 
+data          [(.,0) (..,0) (y,1)] [] [] [] [] [] [] []
 
 fd=open("/y", O_WRONLY|O_APPEND); write(fd, buf, BLOCKSIZE); close(fd);
 
 inode bitmap  11000000
-inodes        [d a:0 r:3] [f a:1 r:1] [] [] [] [] [] [] 
+inodes        [d a:0 r:2] [f a:1 r:1] [] [] [] [] [] []
 data bitmap   11000000
-data          [(.,0) (..,0) (y,1)] [u] [] [] [] [] [] [] 
+data          [(.,0) (..,0) (y,1)] [u] [] [] [] [] [] []
 
 link("/y", "/m");
 
 inode bitmap  11000000
-inodes        [d a:0 r:4] [f a:1 r:2] [] [] [] [] [] [] 
+inodes        [d a:0 r:2] [f a:1 r:2] [] [] [] [] [] []
 data bitmap   11000000
-data          [(.,0) (..,0) (y,1) (m,1)] [u] [] [] [] [] [] [] 
+data          [(.,0) (..,0) (y,1) (m,1)] [u] [] [] [] [] [] []
 
-unlink("/m")
+unlink("/m");
 
 inode bitmap  11000000
-inodes        [d a:0 r:4] [f a:1 r:1] [] [] [] [] [] [] 
+inodes        [d a:0 r:2] [f a:1 r:1] [] [] [] [] [] []
 data bitmap   11000000
-data          [(.,0) (..,0) (y,1)] [u] [] [] [] [] [] [] 
+data          [(.,0) (..,0) (y,1)] [u] [] [] [] [] [] []
 
 creat("/z");
 
 inode bitmap  11100000
-inodes        [d a:0 r:5] [f a:1 r:1] [f a:-1 r:1] [] [] [] [] [] 
+inodes        [d a:0 r:2] [f a:1 r:1] [f a:-1 r:1] [] [] [] [] []
 data bitmap   11000000
-data          [(.,0) (..,0) (y,1) (z,2)] [u] [] [] [] [] [] [] 
+data          [(.,0) (..,0) (y,1) (z,2)] [u] [] [] [] [] [] []
 
 mkdir("/f");
 
 inode bitmap  11110000
-inodes        [d a:0 r:6] [f a:1 r:1] [f a:-1 r:1] [d a:2 r:2] [] ...
+inodes        [d a:0 r:3] [f a:1 r:1] [f a:-1 r:1] [d a:2 r:2] [] [] [] []
 data bitmap   11100000
-data          [(.,0) (..,0) (y,1) (z,2) (f,3)] [u] [(.,3) (..,0)] [] ...
-]
+data          [(.,0) (..,0) (y,1) (z,2) (f,3)] [u] [(.,3) (..,0)] [] [] [] [] []
+
 
 You can also run the simulator in "reverse" mode (with the "-r" flag),
 printing the operations instead of the states to see if you can predict the

@@ -503,11 +503,12 @@ class fs:
     # inodes        [d a:0 r:3] [f a:-1 r:1] [f a:6 r:4] [f a:-1 r:1] [] [d a:3 r:2] [] [] [] [] [] [] [] [] [] []
     # data bitmap   1001001000000000
     # data          [(.,0) (..,0) (v,2) (d,2) (e,2) (n,2) (s,5)] [] [] [(.,5) (..,0) (w,3) (k,1)] [] [] [t] [] [] [] [] [] [] [] [] []
-    def corrupt(self, whichCorruption):
+    def corrupt(self, whichCorrupt):
         random.seed(self.seedCorrupt)
         num = random.randint(0, 11)
-        if whichCorruption != -1:
-            num = whichCorruption
+        # print('RANDINT', num)
+        if whichCorrupt != -1:
+            num = whichCorrupt
 
         if self.solve:
             print('CORRUPTION::', end='')
@@ -575,7 +576,7 @@ class fs:
             addr = self.inodes[badInode].getAddr()
             dirList = self.data[addr].getDirEntries()
             # this is a list of (name, inodeNum) tuples
-            badIndex = random.randint(0, len(dirList))
+            badIndex = random.randint(0, len(dirList)-1)
             badEntry = dirList[badIndex]
             badInodeNum = self.ibitmap.findFree()
             if self.solve:
@@ -587,18 +588,18 @@ class fs:
             addr = self.inodes[badInode].getAddr()
             dirList = self.data[addr].getDirEntries()
             # this is a list of (name, inodeNum) tuples
-            badIndex = random.randint(0, len(dirList))
+            badIndex = random.randint(0, len(dirList)-1)
             badEntry = dirList[badIndex]
             badName = self.makeName()
             if self.solve:
                 print('INODE %d with directory %s:\n  entry (\'%s\', %d) altered to refer to different name (%s)' % (badInode, dirList, badEntry[0], badEntry[1], badName))
             self.data[addr].setDirEntry(badIndex, (badName, badEntry[1]))
         else:
-            print('No such corruption (%d)' % whichCorruption)
+            print('No such corruption (%d)' % whichCorrupt)
             exit(1)
         return
 
-    def run(self, numRequests, whichCorruption):
+    def run(self, numRequests, dontCorrupt, whichCorrupt):
         self.percentMkdir  = 0.40
         self.percentWrite  = 0.40
         self.percentDelete = 0.20
@@ -637,7 +638,8 @@ class fs:
             self.dump()
             print('')
 
-        self.corrupt(whichCorruption)
+        if not dontCorrupt:
+            self.corrupt(whichCorrupt)
 
         if self.solve:
             print('')
@@ -645,8 +647,10 @@ class fs:
         self.dump()
         print('')
 
-        if not self.solve:
+        if not self.solve and not dontCorrupt:
             print('Can you figure out how the file system was corrupted?\n')
+        if not self.solve and dontCorrupt:
+            print('Can you figure out which files and directories exist?\n')
 
         if printFinal:
             print('\nSummary of files, directories::')
@@ -665,8 +669,9 @@ parser.add_option('-i', '--numInodes',   default=16,    help='number of inodes i
 parser.add_option('-d', '--numData',     default=16,    help='number of data blocks in file system', action='store', type='int', dest='numData') 
 parser.add_option('-n', '--numRequests', default=15,    help='number of requests to simulate',       action='store', type='int', dest='numRequests')
 parser.add_option('-p', '--printFinal',  default=False, help='print the final set of files/dirs',    action='store_true',        dest='printFinal')
-parser.add_option('-C', '--corrupt',     default=-1,    help='do a specific corruption',             action='store', type='int', dest='whichCorruption')
+parser.add_option('-w', '--whichCorrupt',default=-1,    help='do a specific corruption',             action='store', type='int', dest='whichCorrupt')
 parser.add_option('-c', '--compute',     default=False, help='compute answers for me',               action='store_true',        dest='solve')
+parser.add_option('-D', '--dontCorrupt', default=False,  help='actually corrupt file system',        action='store_true',        dest='dontCorrupt')
 
 (options, args) = parser.parse_args()
 
@@ -676,6 +681,8 @@ print('ARG numInodes',   options.numInodes)
 print('ARG numData',     options.numData)
 print('ARG numRequests', options.numRequests)
 print('ARG printFinal',  options.printFinal)
+print('ARG whichCorrupt',options.whichCorrupt)
+print('ARG dontCorrupt', options.dontCorrupt)
 print('')
 
 random.seed(options.seed)
@@ -700,6 +707,6 @@ f = fs(options.numInodes, options.numData, options.seedCorrupt, options.solve)
 # ops: mkdir rmdir : create delete : append write
 #
 
-f.run(options.numRequests, options.whichCorruption)
+f.run(options.numRequests, options.dontCorrupt, options.whichCorrupt)
 
 

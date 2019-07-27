@@ -116,8 +116,6 @@ more about them.
 The other flags available for the tool are:
 
 prompt> ./fsck.py -h
-Usage: fsck.py [options]
-
 Options:
   -h, --help            show this help message and exit
   -s SEED, --seed=SEED  first random seed (for a filesystem)
@@ -130,9 +128,10 @@ Options:
   -n NUMREQUESTS, --numRequests=NUMREQUESTS
                         number of requests to simulate
   -p, --printFinal      print the final set of files/dirs
-  -C WHICHCORRUPTION, --corrupt=WHICHCORRUPTION
+  -w WHICHCORRUPT, --whichCorrupt=WHICHCORRUPT
                         do a specific corruption
   -c, --compute         compute answers for me
+  -D, --dontCorrupt     don't actually corrupt file system
 
 The reason for two random seeds is worth describing. The first one, -s,
 creates different random file systems. The second one, -S, inserts different
@@ -142,9 +141,12 @@ it.
 
 Some other flags just control the size of the file system (-i and -d), whereas
 others determine how many file operations are run against the file system
-(-n). Finally, the -p flag prints the contents of the (non-corrupted) file
-system, whereas the -C flag allows you to specify a particular corruption
-(although this is mostly for testing).
+(-n). The -p flag prints the contents of the (non-corrupted) file system; the
+-w flag allows you to specify a particular corruption (although this is mostly
+for testing); the -D flag turns off corruption to, allowing you to examine an
+intact file system.
+
+
 
 
 
