@@ -42,3 +42,16 @@
    ```txt
    Hello, from the child process!\0Hello, from the parent process!\0
    ```
+
+3. One can do this by letting the parent process listen for a signal packet from
+   the child process, after which it may safely print the "Goodbye" message.
+   This program is demonstrated [here](src/3.c).
+
+4. I've written a program that calls `execl` [here](src/4.c), but I'm not sure
+   what the other variants do that well, so I'm skipping that part of the
+   question.
+
+5. This program is demonstrated [here](src/5.c). When `wait` is called in the
+   parent process, it returns the process id (PID) of the child. When `wait` is
+   called in the child process, it returns `-1` as there is no child process to
+   wait for.
