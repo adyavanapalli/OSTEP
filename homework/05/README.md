@@ -27,6 +27,16 @@
    in the parent. What does wait() return? What happens if you use wait() in the
    child?
 
+6. Write a slight modification of the previous program, this time using
+   `waitpid()` instead of `wait()`. When would `waitpid()` be useful?
+
+7. Write a program that creates a child process, and then in the child closes
+   standard output (`STDOUT FILENO`). What happens if the child calls `printf()`
+   to print some output after closing the descriptor?
+
+8. Write a program that creates two children, and connects the standard output
+   of one to the standard input of the other, using the `pipe()` system call.
+
 ## Answers
 
 1. The program is specified [here](src/1.c). The value of `x` in the child
@@ -55,3 +65,17 @@
    parent process, it returns the process id (PID) of the child. When `wait` is
    called in the child process, it returns `-1` as there is no child process to
    wait for.
+
+6. This program is demonstrated [here](src/6.c). Calling `waitpid()` is useful
+   when we need to wait for a specific child, or need to pass additional options
+   like `WNOHANG` (return immediately if no child has exited), `WUNTRACED` (also
+   return if a child has stopped (but not traced via `ptrace(2)`). Status for
+   traced children which have stopped is provided even if this option is not
+   specified), or `WCONTINUED` (also return if a stopped child has been resumed
+   by delivery of `SIGCONT`).
+
+7. When the child closes `STDOUT_FILENO` and uses `printf`, no output is
+   observed.
+
+8. Write a program that creates two children, and connects the standard output
+   of one to the standard input of the other, using the `pipe()` system call.
