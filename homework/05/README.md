@@ -75,7 +75,8 @@
    by delivery of `SIGCONT`).
 
 7. When the child closes `STDOUT_FILENO` and uses `printf`, no output is
-   observed.
+   observed. This program is demonstrated [here](src/7.c).
 
-8. Write a program that creates two children, and connects the standard output
-   of one to the standard input of the other, using the `pipe()` system call.
+8. This program is demonstrated [here](src/8.c). One caveat though: I found it
+   unnecessary to create _two_ children, hence the program is demonstrated with
+   just the parent and child.

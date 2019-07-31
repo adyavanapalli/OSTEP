@@ -1,7 +1,7 @@
 CC=gcc
 CCFLAGS=-Wall -Wextra -Wpedantic
 BUILD_DIR=mkdir -p ../build
-OUT=1.out 2.out 3.out 4.out 5.out 6.out 7.out
+OUT=1.out 2.out 3.out 4.out 5.out 6.out 7.out 8.out
 
 all: $(OUT)
 1.out:
@@ -18,5 +18,7 @@ all: $(OUT)
 	$(BUILD_DIR) && $(CC) $(CCFLAGS) 6.c -o ../build/6.out
 7.out:
 	$(BUILD_DIR) && $(CC) $(CCFLAGS) 7.c -o ../build/7.out
+8.out:
+	$(BUILD_DIR) && $(CC) $(CCFLAGS) 8.c -o ../build/8.out
 clean:
 	rm -rf ../build
