@@ -42,3 +42,6 @@ measure the cost of the OS stopping one process and restoring another on the
 same CPU.
 
 ## Answer
+
+The time it takes to perform a zero byte read (a system call) from `/dev/zero`
+is approximately `5x10^-7` seconds.
