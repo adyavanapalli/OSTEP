@@ -9,7 +9,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-#define PATHNAME "../build/file.txt"
+#define PATHNAME "../bin/file.txt"
 
 int main()
 {
