@@ -44,4 +44,5 @@ same CPU.
 ## Answer
 
 The time it takes to perform a zero byte read (a system call) from `/dev/zero`
-is approximately `5x10^-7` seconds.
+is approximately `5x10^-7` seconds. This was discovered in the program
+[here](src/time_system_call.c).
