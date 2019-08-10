@@ -1,4 +1,4 @@
-// main.c
+// time_system_call.c
 #include <assert.h>
 #include <fcntl.h>
 #include <stdio.h>
