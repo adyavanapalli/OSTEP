@@ -46,3 +46,19 @@ same CPU.
 The time it takes to perform a zero byte read (a system call) from `/dev/zero`
 is approximately `5x10^-7` seconds. This was discovered in the program
 [here](src/time_system_call.c).
+
+The time it takes to perform a context switch, simulated through running two
+processes that communicate with each other through UNIX pipes, is approximately
+`3.5x10^-6` seconds. This was discovered in the program
+[here](src/time_context_switch.c). Since there are two system calls within the
+timing code, if we use the previous estimate of a system call, it implies that
+3.5 us is an overestimate; in fact, assuming two system calls, a context switch
+would likely only take 2.5 us.
+
+To check our answers against a more mature benchmark, we use the `lmbench` tool.
+
+The `lat_syscall` run with the `read` command returns `4.5x10^-7` which is
+roughly what we had calculated.
+
+The `lat_ctx` run with two processes returns `1.2x10^-6` which is within the
+order of magnitude that was calculated.
